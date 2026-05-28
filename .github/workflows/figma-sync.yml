@@ -1,5 +1,8 @@
 name: Sync Figma to GitHub
 
+permissions:
+  contents: write
+
 on:
   workflow_dispatch:
   push:
