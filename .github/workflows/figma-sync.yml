@@ -1,14 +1,338 @@
-      - name: Commit files
+name: Sync Figma to GitHub
+
+permissions:
+  contents: write
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+
+env:
+  FIGMA_TOKEN: ${{ secrets.COPILOT_MCP_FIGMA_TOKEN }}
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Generate Next.js Components
+        run: mkdir -p src/generated/{components,hooks,types,utils} && mkdir -p src/generated/components/{ui,sections}
+
+      - name: Generate Types
+        run: |
+          cat > src/generated/types/design.ts << 'TYPES_EOF'
+          export interface DesignToken {
+            name: string
+            value: string
+            category: 'color' | 'spacing' | 'typography' | 'shadow'
+          }
+
+          export interface ComponentProps {
+            variant?: string
+            size?: 'sm' | 'md' | 'lg'
+            disabled?: boolean
+            className?: string
+          }
+          TYPES_EOF
+
+      - name: Generate Utils
+        run: |
+          cat > src/generated/utils/tailwind.ts << 'UTILS_EOF'
+          export const cn = (...classes: (string | undefined | null | false)[]) => {
+            return classes.filter(Boolean).join(' ')
+          }
+
+          export const responsiveClasses = {
+            container: 'w-full px-4 sm:px-6 lg:px-8',
+            grid: 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6',
+            heading: 'text-2xl sm:text-3xl lg:text-4xl font-bold',
+            body: 'text-base sm:text-lg leading-relaxed',
+          }
+          UTILS_EOF
+
+      - name: Generate Dark Mode Hook
+        run: |
+          cat > src/generated/hooks/useDarkMode.ts << 'HOOK_EOF'
+          'use client'
+          import { useEffect, useState } from 'react'
+          export function useDarkMode() {
+            const [isDark, setIsDark] = useState(false)
+            const [isMounted, setIsMounted] = useState(false)
+            useEffect(() => {
+              setIsMounted(true)
+              const isDarkMode = localStorage.getItem('darkMode') === 'true'
+              const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches
+              setIsDark(isDarkMode || prefersDark)
+            }, [])
+            useEffect(() => {
+              if (!isMounted) return
+              const html = document.documentElement
+              if (isDark) {
+                html.classList.add('dark')
+              } else {
+                html.classList.remove('dark')
+              }
+              localStorage.setItem('darkMode', isDark.toString())
+            }, [isDark, isMounted])
+            return { isDark, setIsDark, isMounted }
+          }
+          HOOK_EOF
+
+      - name: Generate Button Component
+        run: |
+          cat > src/generated/components/ui/Button.tsx << 'BUTTON_EOF'
+          'use client'
+          import { ButtonHTMLAttributes, forwardRef } from 'react'
+          import { cn } from '@/generated/utils/tailwind'
+          export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+            variant?: 'default' | 'secondary' | 'destructive' | 'ghost' | 'outline'
+            size?: 'sm' | 'md' | 'lg'
+            isLoading?: boolean
+          }
+          const Button = forwardRef<HTMLButtonElement, ButtonProps>(
+            ({ className, variant = 'default', size = 'md', isLoading, children, disabled, ...props }, ref) => {
+              const baseStyles = 'inline-flex items-center justify-center rounded-lg font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed'
+              const variantStyles = {
+                default: 'bg-blue-600 text-white hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600',
+                secondary: 'bg-gray-200 text-gray-900 hover:bg-gray-300 dark:bg-gray-700 dark:text-gray-100',
+                destructive: 'bg-red-600 text-white hover:bg-red-700 dark:bg-red-500 dark:hover:bg-red-600',
+                ghost: 'hover:bg-gray-100 dark:hover:bg-gray-800',
+                outline: 'border-2 border-gray-300 hover:bg-gray-50 dark:border-gray-600 dark:hover:bg-gray-900',
+              }
+              const sizeStyles = {
+                sm: 'px-3 py-1.5 text-sm',
+                md: 'px-4 py-2 text-base',
+                lg: 'px-6 py-3 text-lg',
+              }
+              return (
+                <button
+                  ref={ref}
+                  disabled={disabled || isLoading}
+                  className={cn(baseStyles, variantStyles[variant], sizeStyles[size], className)}
+                  {...props}
+                >
+                  {children}
+                </button>
+              )
+            }
+          )
+          Button.displayName = 'Button'
+          export default Button
+          BUTTON_EOF
+
+      - name: Generate Card Component
+        run: |
+          cat > src/generated/components/ui/Card.tsx << 'CARD_EOF'
+          'use client'
+          import { HTMLAttributes, ReactNode } from 'react'
+          import { cn } from '@/generated/utils/tailwind'
+          export interface CardProps extends HTMLAttributes<HTMLDivElement> {
+            children: ReactNode
+          }
+          export function Card({ className, ...props }: CardProps) {
+            return (
+              <div
+                className={cn(
+                  'rounded-lg border border-gray-200 bg-white p-6 shadow-sm hover:shadow-md dark:border-gray-700 dark:bg-gray-800',
+                  className
+                )}
+                {...props}
+              />
+            )
+          }
+          export function CardHeader({ className, ...props }: CardProps) {
+            return <div className={cn('mb-4 border-b border-gray-200 pb-4 dark:border-gray-700', className)} {...props} />
+          }
+          export function CardTitle({ className, ...props }: CardProps) {
+            return <h3 className={cn('text-xl font-bold text-gray-900 dark:text-white', className)} {...props} />
+          }
+          export function CardContent({ className, ...props }: CardProps) {
+            return <div className={cn('text-gray-700 dark:text-gray-300', className)} {...props} />
+          }
+          export function CardFooter({ className, ...props }: CardProps) {
+            return <div className={cn('mt-4 border-t border-gray-200 pt-4 dark:border-gray-700', className)} {...props} />
+          }
+          CARD_EOF
+
+      - name: Generate Badge Component
+        run: |
+          cat > src/generated/components/ui/Badge.tsx << 'BADGE_EOF'
+          'use client'
+          import { HTMLAttributes } from 'react'
+          import { cn } from '@/generated/utils/tailwind'
+          export interface BadgeProps extends HTMLAttributes<HTMLDivElement> {
+            variant?: 'default' | 'secondary' | 'destructive' | 'outline'
+          }
+          export function Badge({ className, variant = 'default', ...props }: BadgeProps) {
+            const variantStyles = {
+              default: 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200',
+              secondary: 'bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-200',
+              destructive: 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200',
+              outline: 'border border-gray-300 text-gray-800 dark:border-gray-600 dark:text-gray-200',
+            }
+            return (
+              <div
+                className={cn('inline-flex items-center rounded-full px-3 py-1 text-sm font-medium', variantStyles[variant], className)}
+                {...props}
+              />
+            )
+          }
+          BADGE_EOF
+
+      - name: Generate Hero Section
+        run: |
+          cat > src/generated/components/sections/HeroSection.tsx << 'HERO_EOF'
+          'use client'
+          import Button from '@/generated/components/ui/Button'
+          export default function HeroSection() {
+            return (
+              <section className="relative overflow-hidden bg-gradient-to-br from-blue-50 to-indigo-100 px-4 py-12 sm:px-6 sm:py-16 lg:px-8 lg:py-24 dark:from-gray-900 dark:to-gray-800">
+                <div className="mx-auto max-w-4xl">
+                  <div className="text-center">
+                    <h1 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold tracking-tight text-gray-900 dark:text-white mb-4 sm:mb-6">
+                      Seu Produto Incrível
+                    </h1>
+                    <p className="text-lg sm:text-xl text-gray-600 dark:text-gray-300 mb-8 sm:mb-10 leading-relaxed">
+                      Crie experiências incríveis com componentes responsivos e modernos.
+                    </p>
+                    <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                      <Button variant="default" size="lg">
+                        Começar Agora
+                      </Button>
+                      <Button variant="outline" size="lg">
+                        Saiba Mais
+                      </Button>
+                    </div>
+                  </div>
+                </div>
+              </section>
+            )
+          }
+          HERO_EOF
+
+      - name: Generate Features Section
+        run: |
+          cat > src/generated/components/sections/FeaturesSection.tsx << 'FEATURES_EOF'
+          'use client'
+          import { Card, CardTitle, CardContent } from '@/generated/components/ui/Card'
+          const features = [
+            { title: 'Responsivo', description: 'Mobile, tablet e desktop.', icon: '📱' },
+            { title: 'Dark Mode', description: 'Tema escuro automático.', icon: '🌙' },
+            { title: 'Acessível', description: 'WCAG 2.1 AA compatível.', icon: '♿' },
+            { title: 'TypeScript', description: 'Type-safe completo.', icon: '📘' },
+          ]
+          export default function FeaturesSection() {
+            return (
+              <section className="py-12 sm:py-16 lg:py-24 px-4 sm:px-6 lg:px-8">
+                <div className="mx-auto max-w-6xl">
+                  <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-center mb-12 text-gray-900 dark:text-white">
+                    Recursos Principais
+                  </h2>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+                    {features.map((feature) => (
+                      <Card key={feature.title}>
+                        <div className="text-4xl mb-4">{feature.icon}</div>
+                        <CardTitle>{feature.title}</CardTitle>
+                        <CardContent className="mt-2">{feature.description}</CardContent>
+                      </Card>
+                    ))}
+                  </div>
+                </div>
+              </section>
+            )
+          }
+          FEATURES_EOF
+
+      - name: Generate App Component
+        run: |
+          cat > src/generated/App.tsx << 'APP_EOF'
+          'use client'
+          import HeroSection from '@/generated/components/sections/HeroSection'
+          import FeaturesSection from '@/generated/components/sections/FeaturesSection'
+          import { useDarkMode } from '@/generated/hooks/useDarkMode'
+          export default function App() {
+            const { isDark, setIsDark, isMounted } = useDarkMode()
+            if (!isMounted) return null
+            return (
+              <div className={isDark ? 'dark' : ''}>
+                <div className="min-h-screen bg-white dark:bg-gray-900 transition-colors">
+                  <header className="sticky top-0 z-50 border-b border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-800">
+                    <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+                      <div className="flex items-center justify-between h-16">
+                        <h1 className="text-2xl font-bold text-gray-900 dark:text-white">MyApp</h1>
+                        <button onClick={() => setIsDark(!isDark)} className="p-2 rounded-lg bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600">
+                          {isDark ? '☀️' : '🌙'}
+                        </button>
+                      </div>
+                    </div>
+                  </header>
+                  <main>
+                    <HeroSection />
+                    <FeaturesSection />
+                  </main>
+                  <footer className="border-t border-gray-200 bg-gray-50 dark:border-gray-700 dark:bg-gray-800 py-8 px-4 sm:px-6 lg:px-8">
+                    <div className="mx-auto max-w-7xl text-center text-gray-600 dark:text-gray-400">
+                      <p>© 2026 MyApp. Gerado do Figma.</p>
+                    </div>
+                  </footer>
+                </div>
+              </div>
+            )
+          }
+          APP_EOF
+
+      - name: Generate Index Files
+        run: |
+          cat > src/generated/components/ui/index.ts << 'INDEX_UI_EOF'
+          export { default as Button } from './Button'
+          export { Card, CardHeader, CardTitle, CardContent, CardFooter } from './Card'
+          export { Badge } from './Badge'
+          INDEX_UI_EOF
+
+          cat > src/generated/components/sections/index.ts << 'INDEX_SECTIONS_EOF'
+          export { default as HeroSection } from './HeroSection'
+          export { default as FeaturesSection } from './FeaturesSection'
+          INDEX_SECTIONS_EOF
+
+          cat > src/generated/components/index.ts << 'INDEX_COMPONENTS_EOF'
+          export * from './ui'
+          export * from './sections'
+          INDEX_COMPONENTS_EOF
+
+          cat > src/generated/hooks/index.ts << 'INDEX_HOOKS_EOF'
+          export { useDarkMode } from './useDarkMode'
+          INDEX_HOOKS_EOF
+
+          cat > src/generated/utils/index.ts << 'INDEX_UTILS_EOF'
+          export { cn, responsiveClasses } from './tailwind'
+          INDEX_UTILS_EOF
+
+          cat > src/generated/types/index.ts << 'INDEX_TYPES_EOF'
+          export type { DesignToken, ComponentProps } from './design'
+          INDEX_TYPES_EOF
+
+          cat > src/generated/index.ts << 'INDEX_MAIN_EOF'
+          export * from './components'
+          export * from './hooks'
+          export * from './utils'
+          export * from './types'
+          INDEX_MAIN_EOF
+
+      - name: Commit and Push
         run: |
           git config --global user.name "github-actions"
           git config --global user.email "actions@github.com"
           git add src/generated/
-          
-          if git diff --cached --quiet; then
-            echo "No changes detected"
-          else
-            TIMESTAMP=$(date -u +'%Y-%m-%dT%H:%M:%SZ')
-            git commit -m "chore: Auto-generate components from Figma - $TIMESTAMP"
+          if ! git diff --cached --quiet; then
+            git commit -m "chore: Auto-generate components from Figma"
             git push
-            echo "✅ Changes pushed successfully"
           fi
