@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="pt-BR" suppressHydrationWarning>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="TV P65CGA Mini QlLED - Experiência de visualização premium com tecnologia quantum dot." />
+  <meta name="theme-color" content="#2563eb" />
+  <meta property="og:title" content="TV P65CGA - Mini QlLED" />
+  <meta property="og:description" content="Experiência de visualização premium com tecnologia quantum dot." />
+  <meta property="og:type" content="website" />
+  
+  <title>TV P65CGA - Mini QlLED | Experiência Premium</title>
+  
+  <link rel="stylesheet" href="css/styles.css" />
+  <style>
+    /* Preload animations */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .fade-in-up {
+      animation: fadeInUp 0.6s ease-out;
+    }
+
+    /* Skip to main content link */
+    .skip-to-main {
+      position: absolute;
+      top: -40px;
+      left: 0;
+      background: var(--color-primary);
+      color: white;
+      padding: 8px;
+      text-decoration: none;
+      z-index: 100;
+    }
+
+    .skip-to-main:focus {
+      top: 0;
+    }
+  </style>
+</head>
+<body>
+  <a href="#main" class="skip-to-main">Ir para conteúdo principal</a>
+
+  <!-- Header -->
+  <header class="sticky top-0 z-50 border-b border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-800 transition-colors">
+    <nav class="container flex items-center justify-between py-4">
+      <div class="flex items-center gap-2">
+        <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-blue-600 to-purple-600 flex items-center justify-center">
+          <span class="text-white font-bold text-sm">TV</span>
+        </div>
+        <span class="font-bold text-xl text-gray-900 dark:text-white">P65CGA</span>
+      </div>
+
+      <!-- Desktop Navigation -->
+      <div class="hidden md:flex gap-8 items-center">
+        <a href="#features" class="text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white transition-colors font-medium">Recursos</a>
+        <a href="#specs" class="text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white transition-colors font-medium">Especificações</a>
+        <a href="#gallery" class="text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white transition-colors font-medium">Galeria</a>
+        <button id="darkModeToggle" class="p-2 rounded-lg bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600 transition-colors" aria-label="Alternar modo escuro">
+          🌙
+        </button>
+      </div>
+
+      <!-- Mobile Menu Button -->
+      <div class="md:hidden flex items-center gap-2">
+        <button id="darkModeToggle" class="p-2 rounded-lg bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600 transition-colors" aria-label="Alternar modo escuro">
+          🌙
+        </button>
+        <button id="mobileMenuBtn" class="p-2 rounded-lg bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600" aria-expanded="false" aria-label="Menu">
+          ☰
+        </button>
+      </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div id="mobileMenu" class="hidden md:hidden border-t border-gray-200 dark:border-gray-700">
+      <div class="container py-4 flex flex-col gap-4">
+        <a href="#features" class="text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white py-2">Recursos</a>
+        <a href="#specs" class="text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white py-2">Especificações</a>
+        <a href="#gallery" class="text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white py-2">Galeria</a>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+    <!-- Hero Section -->
+    <section id="hero" class="relative overflow-hidden bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-gray-900 dark:to-gray-800 py-20 md:py-32">
+      <div class="container">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+          <!-- Content -->
+          <div class="fade-in-up">
+            <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 dark:text-white mb-6 leading-tight">
+              TV P65CGA
+              <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">
+                Mini QlLED
+              </span>
+            </h1>
+            
+            <p class="text-lg md:text-xl text-gray-600 dark:text-gray-300 mb-8 leading-relaxed">
+              Experiência de visualização premium com tecnologia quantum dot de próxima geração. 65" de pura qualidade em design compacto.
+            </p>
+
+            <div class="flex flex-col sm:flex-row gap-4">
+              <button class="btn btn-default btn-lg">
+                Comprar Agora
+              </button>
+              <button class="btn btn-outline btn-lg">
+                Ver Detalhes
+              </button>
+            </div>
+
+            <!-- Trust badges -->
+            <div class="mt-12 flex gap-6 text-sm text-gray-600 dark:text-gray-400">
+              <div class="flex items-center gap-2">
+                <span class="text-2xl">✓</span>
+                <span>Entrega Rápida</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <span class="text-2xl">✓</span>
+                <span>Garantia 2 Anos</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <span class="text-2xl">✓</span>
+                <span>Suporte 24/7</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Image -->
+          <div class="relative hidden md:block">
+            <div class="aspect-square bg-gradient-to-br from-blue-200 to-indigo-300 dark:from-blue-900 dark:to-indigo-900 rounded-2xl flex items-center justify-center shadow-2xl">
+              <div class="text-center">
+                <div class="text-6xl mb-4">📺</div>
+                <p class="text-gray-700 dark:text-gray-300 font-semibold">65" QlLED Display</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="py-20 md:py-32 bg-white dark:bg-gray-900">
+      <div class="container">
+        <div class="text-center mb-16" data-fade-in>
+          <h2 class="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4">
+            Recursos Principais
+          </h2>
+          <p class="text-xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+            Tecnologia de ponta para melhor experiência visual
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <!-- Feature 1 -->
+          <div class="card fade-in-up" style="animation-delay: 0.1s" data-fade-in>
+            <div class="text-5xl mb-4">✨</div>
+            <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-3">Quantum Dot</h3>
+            <p class="text-gray-600 dark:text-gray-400">
+              Tecnologia quantum dot para cores mais vibrantes e precisas
+            </p>
+          </div>
+
+          <!-- Feature 2 -->
+          <div class="card fade-in-up" style="animation-delay: 0.2s" data-fade-in>
+            <div class="text-5xl mb-4">🎬</div>
+            <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-3">4K Ultra HD</h3>
+            <p class="text-gray-600 dark:text-gray-400">
+              Resolução 4K com HDR10+ para detalhes incríveis
+            </p>
+          </div>
+
+          <!-- Feature 3 -->
+          <div class="card fade-in-up" style="animation-delay: 0.3s" data-fade-in>
+            <div class="text-5xl mb-4">⚡</div>
+            <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-3">120Hz</h3>
+            <p class="text-gray-600 dark:text-gray-400">
+              Taxa de atualização de 120Hz para movimentos suaves
+            </p>
+          </div>
+
+          <!-- Feature 4 -->
+          <div class="card fade-in-up" style="animation-delay: 0.4s" data-fade-in>
+            <div class="text-5xl mb-4">🔊</div>
+            <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-3">Som Dolby</h3>
+            <p class="text-gray-600 dark:text-gray-400">
+              Áudio Dolby Atmos com sistema de som imersivo
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Specs Section -->
+    <section id="specs" class="py-20 md:py-32 bg-gray-50 dark:bg-gray-800">
+      <div class="container">
+        <div class="text-center mb-16" data-fade-in>
+          <h2 class="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4">
+            Especificações Técnicas
+          </h2>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <!-- Spec cards -->
+          <div class="card" data-fade-in>
+            <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-4">Tela</h3>
+            <ul class="space-y-3 text-gray-600 dark:text-gray-400">
+              <li><strong>Tamanho:</strong> 65 polegadas</li>
+              <li><strong>Resolução:</strong> 4K UHD (3840×2160)</li>
+              <li><strong>Tipo:</strong> Quantum Dot</li>
+              <li><strong>Taxa de atualização:</strong> 120Hz</li>
+            </ul>
+          </div>
+
+          <div class="card" data-fade-in>
+            <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-4">Cores e Contraste</h3>
+            <ul class="space-y-3 text-gray-600 dark:text-gray-400">
+              <li><strong>Cobertura de cores:</strong> 99% DCI-P3</li>
+              <li><strong>Contraste:</strong> Infinito (MicroLED)</li>
+              <li><strong>Brilho:</strong> 1000 nits pico</li>
+              <li><strong>HDR:</strong> HDR10+ Dolby Vision</li>
+            </ul>
+          </div>
+
+          <div class="card" data-fade-in>
+            <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-4">Áudio</h3>
+            <ul class="space-y-3 text-gray-600 dark:text-gray-400">
+              <li><strong>Sistema:</strong> Dolby Atmos</li>
+              <li><strong>Potência:</strong> 40W RMS</li>
+              <li><strong>Canais:</strong> 2.2.2</li>
+              <li><strong>Frequência:</strong> 20Hz - 20kHz</li>
+            </ul>
+          </div>
+
+          <div class="card" data-fade-in>
+            <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-4">Conectividade</h3>
+            <ul class="space-y-3 text-gray-600 dark:text-gray-400">
+              <li><strong>HDMI:</strong> 4× HDMI 2.1</li>
+              <li><strong>USB:</strong> 3× USB 3.0</li>
+              <li><strong>Wi-Fi:</strong> Wi-Fi 6E</li>
+              <li><strong>Bluetooth:</strong> 5.2</li>
+            </ul>
+          </div>
+
+          <div class="card" data-fade-in>
+            <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-4">Smart TV</h3>
+            <ul class="space-y-3 text-gray-600 dark:text-gray-400">
+              <li><strong>SO:</strong> WebOS 24</li>
+              <li><strong>Apps:</strong> Netflix, Prime, Disney+</li>
+              <li><strong>Controle:</strong> Magic Remote</li>
+              <li><strong>IA:</strong> AI Sound Pro</li>
+            </ul>
+          </div>
+
+          <div class="card" data-fade-in>
+            <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-4">Físico</h3>
+            <ul class="space-y-3 text-gray-600 dark:text-gray-400">
+              <li><strong>Dimensões:</strong> 1445 × 831 × 65mm</li>
+              <li><strong>Peso:</strong> 16.5 kg</li>
+              <li><strong>VESA:</strong> 300×300mm</li>
+              <li><strong>Energia:</strong> 80W típico</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section id="gallery" class="py-20 md:py-32 bg-white dark:bg-gray-900">
+      <div class="container">
+        <div class="text-center mb-16" data-fade-in>
+          <h2 class="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4">
+            Galeria
+          </h2>
+          <p class="text-xl text-gray-600 dark:text-gray-400">
+            Veja a beleza do TV P65CGA em ação
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <!-- Gallery items -->
+          <div class="relative overflow-hidden rounded-xl shadow-lg hover:shadow-2xl transition-shadow group cursor-pointer" data-fade-in>
+            <div class="aspect-square bg-gradient-to-br from-blue-200 to-purple-300 dark:from-blue-900 dark:to-purple-900 flex items-center justify-center text-6xl">
+              📺
+            </div>
+            <div class="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors"></div>
+          </div>
+
+          <div class="relative overflow-hidden rounded-xl shadow-lg hover:shadow-2xl transition-shadow group cursor-pointer" data-fade-in>
+            <div class="aspect-square bg-gradient-to-br from-green-200 to-blue-300 dark:from-green-900 dark:to-blue-900 flex items-center justify-center text-6xl">
+              🎬
+            </div>
+            <div class="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors"></div>
+          </div>
+
+          <div class="relative overflow-hidden rounded-xl shadow-lg hover:shadow-2xl transition-shadow group cursor-pointer" data-fade-in>
+            <div class="aspect-square bg-gradient-to-br from-yellow-200 to-orange-300 dark:from-yellow-900 dark:to-orange-900 flex items-center justify-center text-6xl">
+              🎮
+            </div>
+            <div class="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors"></div>
+          </div>
+
+          <div class="relative overflow-hidden rounded-xl shadow-lg hover:shadow-2xl transition-shadow group cursor-pointer" data-fade-in>
+            <div class="aspect-square bg-gradient-to-br from-pink-200 to-red-300 dark:from-pink-900 dark:to-red-900 flex items-center justify-center text-6xl">
+              🌅
+            </div>
+            <div class="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors"></div>
+          </div>
+
+          <div class="relative overflow-hidden rounded-xl shadow-lg hover:shadow-2xl transition-shadow group cursor-pointer" data-fade-in>
+            <div class="aspect-square bg-gradient-to-br from-purple-200 to-pink-300 dark:from-purple-900 dark:to-pink-900 flex items-center justify-center text-6xl">
+              🎨
+            </div>
+            <div class="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors"></div>
+          </div>
+
+          <div class="relative overflow-hidden rounded-xl shadow-lg hover:shadow-2xl transition-shadow group cursor-pointer" data-fade-in>
+            <div class="aspect-square bg-gradient-to-br from-indigo-200 to-blue-300 dark:from-indigo-900 dark:to-blue-900 flex items-center justify-center text-6xl">
+              ✨
+            </div>
+            <div class="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-20 md:py-32 bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-800 dark:to-purple-800">
+      <div class="container text-center" data-fade-in>
+        <h2 class="text-4xl md:text-5xl font-bold text-white mb-6">
+          Pronto para a melhor experiência visual?
+        </h2>
+        <p class="text-xl text-blue-100 mb-8 max-w-2xl mx-auto">
+          Experimente a diferença com o TV P65CGA Mini QlLED
+        </p>
+        <button class="btn bg-white text-blue-600 hover:bg-gray-100 btn-lg font-bold">
+          Comprar Agora →
+        </button>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-gray-900 dark:bg-gray-950 text-gray-400 py-12 md:py-16">
+    <div class="container">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+        <!-- Sobre -->
+        <div>
+          <h3 class="text-white font-bold mb-4">Sobre</h3>
+          <ul class="space-y-2 text-sm">
+            <li><a href="#" class="hover:text-white transition">Quem somos</a></li>
+            <li><a href="#" class="hover:text-white transition">Carreiras</a></li>
+            <li><a href="#" class="hover:text-white transition">Blog</a></li>
+          </ul>
+        </div>
+
+        <!-- Suporte -->
+        <div>
+          <h3 class="text-white font-bold mb-4">Suporte</h3>
+          <ul class="space-y-2 text-sm">
+            <li><a href="#" class="hover:text-white transition">Ajuda</a></li>
+            <li><a href="#" class="hover:text-white transition">Contato</a></li>
+            <li><a href="#" class="hover:text-white transition">Garantia</a></li>
+          </ul>
+        </div>
+
+        <!-- Produtos -->
+        <div>
+          <h3 class="text-white font-bold mb-4">Produtos</h3>
+          <ul class="space-y-2 text-sm">
+            <li><a href="#" class="hover:text-white transition">TVs</a></li>
+            <li><a href="#" class="hover:text-white transition">Acessórios</a></li>
+            <li><a href="#" class="hover:text-white transition">Serviços</a></li>
+          </ul>
+        </div>
+
+        <!-- Redes Sociais -->
+        <div>
+          <h3 class="text-white font-bold mb-4">Siga-nos</h3>
+          <ul class="space-y-2 text-sm">
+            <li><a href="#" class="hover:text-white transition">Facebook</a></li>
+            <li><a href="#" class="hover:text-white transition">Instagram</a></li>
+            <li><a href="#" class="hover:text-white transition">Twitter</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="border-t border-gray-800 pt-8">
+        <div class="flex flex-col md:flex-row justify-between items-center text-sm">
+          <p>&copy; 2026 TV P65CGA. Todos os direitos reservados.</p>
+          <div class="flex gap-6 mt-4 md:mt-0">
+            <a href="#" class="hover:text-white transition">Privacidade</a>
+            <a href="#" class="hover:text-white transition">Termos</a>
+            <a href="#" class="hover:text-white transition">Cookies</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/darkMode.js"></script>
+  <script src="js/interactions.js"></script>
+</body>
+</html>
